@@ -16,7 +16,7 @@ public class UserService {
 
     // Create a User
     public LocalUser registerUser(RegistrationBody registrationBody) throws UserAlreadyExistException {
-        if (localUserDTO.findByUsername(registrationBody.getUserName()).isPresent()
+        if (localUserDTO.findByUserName(registrationBody.getUserName()).isPresent()
                 && localUserDTO.findByEmail(registrationBody.getEmail()).isPresent()) {
             throw new UserAlreadyExistException("User already exists or Email already exists");
         }

@@ -1,4 +1,4 @@
-package com.ecommerce.ECommerce.api;
+package com.ecommerce.ECommerce.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommerce.ECommerce.api.model.RegistrationBody;
 import com.ecommerce.ECommerce.services.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class ControllerAuth {
@@ -26,7 +28,7 @@ public class ControllerAuth {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity registerUser(@RequestBody RegistrationBody registrationBody) {
+    public ResponseEntity registerUser(@Valid @RequestBody RegistrationBody registrationBody) {
         try {
             userService.registerUser(registrationBody);
 
