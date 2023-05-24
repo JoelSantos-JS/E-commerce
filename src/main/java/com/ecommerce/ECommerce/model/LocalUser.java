@@ -21,7 +21,7 @@ public class LocalUser {
 
     @Column(unique = true, nullable = false, length = 45, name = "user_name")
     private String userName;
-    @Column(nullable = false, length = 25, name = "user_password")
+    @Column(nullable = false, length = 800, name = "user_password")
     private String passWord;
     @Column(unique = true, nullable = false, length = 50, name = "user_email")
     private String email;

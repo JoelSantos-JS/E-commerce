@@ -35,6 +35,7 @@ public class ControllerAuth {
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             // TODO: handle exception
+            e.printStackTrace();
 
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }

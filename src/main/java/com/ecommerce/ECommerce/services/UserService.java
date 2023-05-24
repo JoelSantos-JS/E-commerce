@@ -14,10 +14,13 @@ public class UserService {
     @Autowired
     private LocalUserDTO localUserDTO;
 
+    @Autowired
+    private EncryptionService es;
+
     // Create a User
     public LocalUser registerUser(RegistrationBody registrationBody) throws UserAlreadyExistException {
         if (localUserDTO.findByUserName(registrationBody.getUserName()).isPresent()
-                && localUserDTO.findByEmail(registrationBody.getEmail()).isPresent()) {
+                || localUserDTO.findByEmail(registrationBody.getEmail()).isPresent()) {
             throw new UserAlreadyExistException("User already exists or Email already exists");
         }
 
@@ -27,7 +30,8 @@ public class UserService {
         user.setLastName(registrationBody.getLastName());
         user.setEmail(registrationBody.getEmail());
         user.setUserName(registrationBody.getUserName());
-        user.setPassWord(registrationBody.getPassword());
+        // Encryption Password
+        user.setPassWord(es.encryptPassword(registrationBody.getPassword()));
 
         return localUserDTO.save(user);
     }
