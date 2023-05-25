@@ -20,7 +20,7 @@ public class JwtService {
     @Value("${jwt.issuer}")
     private String issuer;
 
-    @Value("${jwt.expirationInSeconds}")
+    @Value("${jwt.expiryInSeconds}")
     private int expiryInSeconds;
 
     private Algorithm algorithm;
