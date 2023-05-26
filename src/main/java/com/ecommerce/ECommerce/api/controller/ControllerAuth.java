@@ -3,6 +3,8 @@ package com.ecommerce.ECommerce.api.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommerce.ECommerce.api.model.LoginBody;
 import com.ecommerce.ECommerce.api.model.LoginResponse;
 import com.ecommerce.ECommerce.api.model.RegistrationBody;
+import com.ecommerce.ECommerce.model.LocalUser;
 import com.ecommerce.ECommerce.services.UserService;
 
 import jakarta.validation.Valid;
@@ -49,6 +52,12 @@ public class ControllerAuth {
 
             return ResponseEntity.ok(response);
         }
+    }
+
+    @GetMapping(value = "/me")
+    public LocalUser getLocalUser(@AuthenticationPrincipal LocalUser user) {
+        return user;
+
     }
 
 }
