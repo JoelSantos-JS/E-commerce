@@ -28,6 +28,7 @@ public class LocalUser {
     private String passWord;
     @Column(unique = true, nullable = false, length = 50, name = "user_email")
     private String email;
+
     @Column(nullable = false, length = 50, name = "user_first_name")
     private String firstName;
     @Column(nullable = false, length = 50, name = "user_last_name")
