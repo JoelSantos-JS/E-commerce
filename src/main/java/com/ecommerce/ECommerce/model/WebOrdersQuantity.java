@@ -1,64 +1,108 @@
 package com.ecommerce.ECommerce.model;
 
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties.Web;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+/**
+ * The quantity ordered of a product.
+ */
 @Entity
-@Table(name = "web_orders_quantity")
+@Table(name = "web_order_quantities")
 public class WebOrdersQuantity {
 
+    /** The unqiue id of the order quantity. */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+    @Column(name = "id", nullable = false)
+    private Long id;
+    /** The product being ordered. */
     @ManyToOne(optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
-
-    @JoinColumn(name = "quantity", nullable = false)
+    /** The quantity being ordered. */
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
-    @ManyToOne()
+    /** The order itself. */
+    @ManyToOne(optional = false)
     @JoinColumn(name = "order_id", nullable = false)
     private WebOrder order;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
+    /**
+     * Gets the order.
+     * 
+     * @return The order.
+     */
     public WebOrder getOrder() {
         return order;
     }
 
+    /**
+     * Sets the order.
+     * 
+     * @param order The order.
+     */
     public void setOrder(WebOrder order) {
         this.order = order;
+    }
+
+    /**
+     * Gets the quantity ordered.
+     * 
+     * @return The quantity.
+     */
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * Sets the quantity ordered.
+     * 
+     * @param quantity The quantity.
+     */
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    /**
+     * Gets the product ordered.
+     * 
+     * @return The product.
+     */
+    public Product getProduct() {
+        return product;
+    }
+
+    /**
+     * Sets the product.
+     * 
+     * @param product The product.
+     */
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    /**
+     * Gets the id.
+     * 
+     * @return The id.
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     * 
+     * @param id The id.
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }
