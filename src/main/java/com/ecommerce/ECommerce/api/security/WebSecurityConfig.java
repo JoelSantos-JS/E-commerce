@@ -22,7 +22,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // TODO: Proper authentication.
         http.csrf().disable().cors().disable();
-        http.authorizeHttpRequests().anyRequest().permitAll();
+        http.authorizeHttpRequests().anyRequest().authenticated();
         return http.build();
     }
 
