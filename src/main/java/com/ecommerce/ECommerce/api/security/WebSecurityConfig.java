@@ -28,7 +28,8 @@ public class WebSecurityConfig {
         // TODO: Proper authentication.
         http.csrf().disable().cors().disable();
         http.addFilterBefore(jwtTokenProvider, AuthorizationFilter.class);
-        http.authorizeHttpRequests().requestMatchers("/product", "auth/register", "auth/login").permitAll().anyRequest()
+        http.authorizeHttpRequests().requestMatchers("/product", "auth/register", "auth/login", "auth/verify")
+                .permitAll().anyRequest()
                 .authenticated();
         return http.build();
     }
