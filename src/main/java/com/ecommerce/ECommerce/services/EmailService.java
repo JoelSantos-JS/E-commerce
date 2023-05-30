@@ -1,49 +1,65 @@
 package com.ecommerce.ECommerce.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.ECommerce.exception.EmailFailed;
 import com.ecommerce.ECommerce.model.VerificationToken;
 
 @Service
+
 public class EmailService {
 
-    @Value("{app.frontend.url}")
-    private String url;
-
-    @Autowired
-    private JavaMailSender javaMailSender;
-
+    /** The from address to use on emails. */
     @Value("${email.from}")
     private String fromAddress;
+    /** The url of the front end for links. */
+    @Value("${app.frontend.url}")
+    private String url;
+    /** The JavaMailSender instance. */
+    private JavaMailSender javaMailSender;
 
-    private SimpleMailMessage makesimpleMailMessage() {
-        SimpleMailMessage simpleMailMessage2 = new SimpleMailMessage();
-        simpleMailMessage2.setFrom(fromAddress);
-
-        return simpleMailMessage2;
+    /**
+     * Constructor for spring injection.
+     * 
+     * @param javaMailSender
+     */
+    public EmailService(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
     }
 
-    public void sendVerificationEmail(VerificationToken verification_token) throws EmailFailed {
-        SimpleMailMessage message = makesimpleMailMessage();
-        message.setTo(verification_token.getUser().getEmail());
-        message.setSubject("Email Verification to account");
-        message.setText("Please click on the link below to verify your account: \n " + url + "/verify?token="
-                + verification_token.getToken());
+    /**
+     * Makes a SimpleMailMessage for sending.
+     * 
+     * @return The SimpleMailMessage created.
+     */
+    private SimpleMailMessage makeMailMessage() {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom(fromAddress);
+        return simpleMailMessage;
+    }
 
+    /**
+     * Sends a verification email to the user.
+     * 
+     * @param verificationToken The verification token to be sent.
+     * @throws EmailFailureException Thrown if are unable to send the email.
+     */
+    public void sendVerificationEmail(VerificationToken verificationToken) throws EmailFailed {
+        SimpleMailMessage message = makeMailMessage();
+        message.setTo(verificationToken.getUser().getEmail());
+        message.setSubject("Verify your email to active your account.");
+        message.setText("Please follow the link below to verify your email to active your account.\n" +
+                url + "/auth/verify?token=" + verificationToken.getToken());
         try {
             javaMailSender.send(message);
-        } catch (MailException e) {
-            // TODO: handle exception
-            e.printStackTrace();
-            throw new EmailFailed("Failed to send email");
+        } catch (MailException ex) {
+            throw new EmailFailed("");
         }
-
     }
 
 }

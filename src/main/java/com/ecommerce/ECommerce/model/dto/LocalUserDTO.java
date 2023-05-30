@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.ecommerce.ECommerce.model.LocalUser;
 import java.util.List;
 
-@Repository
 public interface LocalUserDTO extends ListCrudRepository<LocalUser, Long> {
     Optional<LocalUser> findByUserName(String userName);
 

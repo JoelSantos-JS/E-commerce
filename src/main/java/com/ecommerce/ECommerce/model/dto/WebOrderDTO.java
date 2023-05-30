@@ -3,6 +3,7 @@ package com.ecommerce.ECommerce.model.dto;
 import java.util.List;
 
 import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.stereotype.Repository;
 
 import com.ecommerce.ECommerce.model.LocalUser;
 import com.ecommerce.ECommerce.model.WebOrder;
